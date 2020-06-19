@@ -1,0 +1,84 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import folium
+
+# Set up some default parameters for graphing
+from matplotlib import cycler
+colour = "#00C2AB" # The default colour for the barcharts
+colors = cycler('color',
+                ['#4FBBA9', '#E56D13', '#D43A69',
+                 '#25539f', '#88BB44', '#FFBBBB'])
+plt.rc('axes', facecolor='#E6E6E6', edgecolor='none',
+       axisbelow=True, grid=True, prop_cycle=colors)
+plt.rc('grid', color='w', linestyle='solid')
+plt.rc('xtick', direction='out', color='gray')
+plt.rc('ytick', direction='out', color='gray')
+plt.rc('patch', edgecolor='#E6E6E6')
+plt.rc('lines', linewidth=2)
+font = {'family' : 'DejaVu Sans',
+        'weight' : 'normal',
+        'size'   : 16}
+plt.rc('font', **font)
+plt.rc('legend', fancybox = True, framealpha=1, shadow=True, borderpad=1)
+
+
+
+# This will make all of our charts for us
+def charter (full_data, date_column, date_format, mnth, mnth_name,
+        counting_column, measure, filename, title, function):
+    full_data[date_column] = pd.to_datetime(full_data[date_column], format=date_format, errors='coerce') # Format the date
+    
+    # Organize the data
+    this_data = full_data.groupby([date_column])[counting_column].agg(function) # For each day, count the number of inspections/enforcements/violations
+    this_data = this_data.resample('M').sum() # Summarize inspections/enforcements/violations on a monthly basis  
+    this_data = this_data.loc[(this_data.index.month == int(mnth)) & (this_data.index.year >= 2001)] # Filter to higher quality data timeframe (post-2001) and back to just the selected month 
+    this_data = pd.DataFrame(this_data) # Put our data into a dataframe
+    this_data = this_data.rename(columns={counting_column: measure}) # Format the data columns
+    this_data.index = this_data.index.strftime('%Y-%m') # Make the x axis (date) prettier
+
+    # Create the chart
+    ax = this_data.plot(kind='bar', title = title, figsize=(20, 10), fontsize=16, color=colour)
+    ax
+
+    # Label trendline
+    trend=this_data[measure].mean()
+    ax.axhline(y=trend, color='#e56d13', linestyle='--', label = "Average "+title+" in %s across ECHO history" %(mnth_name))
+
+    # Label the previous three years' trend (2017, 2018, 2019)
+    trend_month=pd.concat([this_data.loc["2017-"+mnth],this_data.loc["2018-"+mnth],this_data.loc["2019-"+mnth]])
+    trend_month=trend_month[measure].mean()
+    ax.axhline(y=trend_month, xmin = .82, xmax=.93, color='#d43a69', linestyle='--', label = "%s 2017-2019 average" %(mnth_name))
+
+    # Label plot
+    ax.legend()
+    ax.set_xlabel("Month and year")
+    ax.set_ylabel( title+" in %s across years" %(mnth_name))
+
+    # Export data 
+    this_data.to_csv(filename) # This will make all of our charts for us
+
+
+# Helps us make the map!
+def mapper(df):
+    # Initialize the map
+    m = folium.Map(
+        location = [df.mean()["FAC_LAT"], df.mean()["FAC_LONG"]]
+    )
+
+    # Add a clickable marker for each facility
+    for index, row in df.iterrows():
+        folium.CircleMarker(
+            location = [row["FAC_LAT"], row["FAC_LONG"]],
+            popup = row["FAC_NAME"] + "<p><a href='"+row["DFR_URL"]+"' target='_blank'>Link to ECHO detailed report</a></p>",
+            radius = 8,
+            color = "black",
+            weight = 1,
+            fill_color = "orange",
+            fill_opacity= .4
+        ).add_to(m)
+
+    bounds = m.get_bounds()
+    m.fit_bounds(bounds)
+
+    # Show the map
+    return m
