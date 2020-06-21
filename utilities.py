@@ -59,15 +59,20 @@ def charter (full_data, date_column, date_format, mnth, mnth_name,
 
 
 # Helps us make the map!
+# Based on https://medium.com/@bobhaffner/folium-markerclusters-and-fastmarkerclusters-1e03b01cb7b1
 def mapper(df):
     # Initialize the map
     m = folium.Map(
         location = [df.mean()["FAC_LAT"], df.mean()["FAC_LONG"]]
     )
 
+    # Create the Marker Cluster array
+    kwargs={"disableClusteringAtZoom": 10, "showCoverageOnHover": False}
+    mc = FastMarkerCluster("", **kwargs)
+ 
     # Add a clickable marker for each facility
     for index, row in df.iterrows():
-        folium.CircleMarker(
+        mc.add_child(folium.CircleMarker(
             location = [row["FAC_LAT"], row["FAC_LONG"]],
             popup = row["FAC_NAME"] + "<p><a href='"+row["DFR_URL"]+"' target='_blank'>Link to ECHO detailed report</a></p>",
             radius = 8,
@@ -75,8 +80,9 @@ def mapper(df):
             weight = 1,
             fill_color = "orange",
             fill_opacity= .4
-        ).add_to(m)
-
+        ))
+    
+    m.add_child(mc)
     bounds = m.get_bounds()
     m.fit_bounds(bounds)
 
