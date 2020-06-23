@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import folium
+from folium.plugins import FastMarkerCluster
 
 # Set up some default parameters for graphing
 from matplotlib import cycler
