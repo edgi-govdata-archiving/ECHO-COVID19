@@ -1,2 +1,5 @@
 
 .ipynb_checkpoints/ECHO-COVID19-checkpoint.ipynb
+*.csv
+ECHO-COVID19/
+ECHO_modules/
