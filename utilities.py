@@ -38,12 +38,12 @@ def charter (full_data, date_column, date_format, mnth_name,
     this_data.index = this_data.index.strftime('%Y') # Make the x axis (date) prettier
 
     # Create the chart
-    ax = this_data.plot(kind='bar', title = ""+title+" in %s of each year across ECHO history" %(mnth_name), figsize=(20, 10), fontsize=16, color=colour)
+    ax = this_data.plot(kind='bar', title = ""+title+" in %s of each year 2001-2020" %(mnth_name), figsize=(20, 10), fontsize=16, color=colour)
     ax
 
     # Label trendline
     trend=this_data[measure].mean()
-    ax.axhline(y=trend, color='#e56d13', linestyle='--', label = "Average "+title+" in %s across ECHO history" %(mnth_name))
+    ax.axhline(y=trend, color='#e56d13', linestyle='--', label = "Average "+title+" in %s 2001-2020" %(mnth_name))
 
     # Label the previous three years' trend (2017, 2018, 2019)
     trend_month=pd.concat([this_data.loc["2017"],this_data.loc["2018"],this_data.loc["2019"]])
