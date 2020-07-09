@@ -15,7 +15,7 @@ This repo is home to a project exploring the effects of EPA's policy to not enfo
 * "[All contributors](https://github.com/kentcdodds/all-contributors#emoji-key)" listing, following these additional guidelines (example: [web-monitoring-db contributors list](https://github.com/edgi-govdata-archiving/web-monitoring-db#contributors)):
 
 # Default branch - 'main'
-The 'master' branch is no longer the repo's primary branch in line with EDGI's policy decided here: https://github.com/edgi-govdata-archiving/overview/issues/241 ** PLEASE DO NOT WORK ON IT **
+The 'master' branch is no longer the repo's primary branch in line with EDGI's policy decided here: https://github.com/edgi-govdata-archiving/overview/issues/241
 
 > If someone has a local clone, they can update their locals like this:
 ```
