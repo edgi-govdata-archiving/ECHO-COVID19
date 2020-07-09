@@ -3,9 +3,6 @@
 # ECHO-COVID-19
 This repo is home to a project exploring the effects of EPA's policy to not enforce certain reporting and emissions rules for facilities burdened by the COVID pandemic. The project is centred around a Jupyter Notebook that interfaces with EPA's ECHO enforcement and compliance history database.
 
-# How to start contributing to this repo
-* Contact @ericnost
-* Slack channel - #eew_coordination
 
 # Default branch - 'main'
 This 'master' branch is no longer the repo's primary branch in line with EDGI's policy decided here: https://github.com/edgi-govdata-archiving/overview/issues/241 ** PLEASE DO NOT WORK ON IT **
@@ -28,14 +25,6 @@ $ git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
 - Update the default branch to be origin/main
 
 (From @jywarren at Public Lab: https://github.com/publiclab/plots2/issues/8077)
-
-
-**Additional features (TBD):**
-* A "How to use" section
-* A link to the [good-first-issue](https://github.com/issues?q=is%3Aopen+is%3Aissue+label%3Agood-first-issue+user%3Aedgi-govdata-archiving) label
-* Highlight "ready" label on issues to mean "this is an issue that is ready to work on and needs an owner"
-* Additional badges at the top, such as code quality indicators
-* "[All contributors](https://github.com/kentcdodds/all-contributors#emoji-key)" listing, following these additional guidelines (example: [web-monitoring-db contributors list](https://github.com/edgi-govdata-archiving/web-monitoring-db#contributors)):
 
 ---
 
