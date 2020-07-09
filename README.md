@@ -10,7 +10,7 @@ This repo is home to a project exploring the effects of EPA's policy to not enfo
 # Default branch - 'main'
 This 'master' branch is no longer the repo's primary branch in line with EDGI's policy decided here: https://github.com/edgi-govdata-archiving/overview/issues/241 ** PLEASE DO NOT WORK ON IT **
 
->If someone has a local clone, they can update their locals like this:
+> If someone has a local clone, they can update their locals like this:
 ```
 $ git checkout master
 $ git branch -m master main
@@ -19,7 +19,7 @@ $ git branch --unset-upstream
 $ git branch -u origin/main
 $ git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
 ```
-The above steps accomplish:
+> The above steps accomplish:
 - Go to the master branch
 - Rename master to main locally
 - Get the latest commits from the server
