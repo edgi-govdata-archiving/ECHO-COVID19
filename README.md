@@ -17,12 +17,12 @@ $ git branch -u origin/main
 $ git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
 ```
 > The above steps accomplish:
-- Go to the master branch
-- Rename master to main locally
-- Get the latest commits from the server
-- Remove the link to origin/master
-- Add a link to origin/main
-- Update the default branch to be origin/main
+> - Go to the master branch
+> - Rename master to main locally
+> - Get the latest commits from the server
+> - Remove the link to origin/master
+> - Add a link to origin/main
+> - Update the default branch to be origin/main
 
 (From @jywarren at Public Lab: https://github.com/publiclab/plots2/issues/8077)
 
