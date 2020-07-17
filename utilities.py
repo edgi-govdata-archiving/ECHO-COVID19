@@ -25,34 +25,31 @@ plt.rc('legend', fancybox = True, framealpha=1, shadow=True, borderpad=1)
 
 
 # This will make all of our charts for us
-def charter (full_data, date_column, date_format, mnth_name,
+def charter (full_data, date_column, date_format,
         counting_column, measure, filename, title, function):
     full_data[date_column] = pd.to_datetime(full_data[date_column], format=date_format, errors='coerce') # Format the date
     
     # Organize the data
     this_data = full_data.groupby([date_column])[counting_column].agg(function) # For each day, count the number of inspections/enforcements/violations # Summarize inspections/enforcements/violations on a monthly basis  
-    this_data = this_data.loc[((this_data.index.month == 3) | (this_data.index.month == 4))  & (this_data.index.year >= 2001)] # Filter to higher quality data timeframe (post-2001) and back to just the selected month 
-    this_data = this_data.resample('Y').sum() # Add together the two months (3 - 4) we're looking at
+    this_data = this_data.loc[(this_data.index <= '2020-05')] # Filter to higher quality data timeframe (post-2001) and back to just the selected month 
+    this_data = this_data.resample('m').sum() # Summarize by month
     this_data = pd.DataFrame(this_data) # Put our data into a dataframe
     this_data = this_data.rename(columns={counting_column: measure}) # Format the data columns
-    this_data.index = this_data.index.strftime('%Y') # Make the x axis (date) prettier
+    this_data.index = this_data.index.strftime('%m/%Y') # Make the x axis (date) prettier
+
+    shade = ["#00C2AB" if ("03" in i or "04" in i or "05" in i) else "grey" for i in this_data.index]
 
     # Create the chart
-    ax = this_data.plot(kind='bar', title = ""+title+" in %s of each year 2001-2020" %(mnth_name), figsize=(20, 10), fontsize=16, color=colour)
+    ax = this_data.plot(kind='bar', color=[shade], title = ""+title+" in each month, 2017-2020", figsize=(20, 10), fontsize=16)
     ax
 
     # Label trendline
     trend=this_data[measure].mean()
-    ax.axhline(y=trend, color='#e56d13', linestyle='--', label = "Average "+title+" in %s 2001-2020" %(mnth_name))
-
-    # Label the previous three years' trend (2017, 2018, 2019)
-    trend_month=pd.concat([this_data.loc["2017"],this_data.loc["2018"],this_data.loc["2019"]])
-    trend_month=trend_month[measure].mean()
-    ax.axhline(y=trend_month, xmin = .82, xmax=.93, color='#d43a69', linestyle='--', label = "Average for %s 2017-2019" %(mnth_name))
+    ax.axhline(y=trend, color='#e56d13', linestyle='--', label = "Average "+title+", 2017-2020")
 
     # Label plot
     ax.legend()
-    ax.set_xlabel("March and April of Each Year")
+    ax.set_xlabel("Month and Year")
     ax.set_ylabel(title)
 
     # Export data 
@@ -75,7 +72,7 @@ def mapper(df):
     for index, row in df.iterrows():
         mc.add_child(folium.CircleMarker(
             location = [row["FAC_LAT"], row["FAC_LONG"]],
-            popup = row["FAC_NAME"] + "<p><a href='"+row["DFR_URL"]+"' target='_blank'>Link to ECHO detailed report</a></p>",
+            popup = str(row["FAC_NAME"]) + "<p><a href='"+row["DFR_URL"]+"' target='_blank'>Link to ECHO detailed report</a></p>",
             radius = 8,
             color = "black",
             weight = 1,
