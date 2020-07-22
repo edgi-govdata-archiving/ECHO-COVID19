@@ -3,6 +3,8 @@
 # ECHO-COVID-19
 This repo is home to a project exploring the effects of EPA's policy to not enforce certain reporting and emissions rules for facilities burdened by the COVID pandemic. The project is centred around a Jupyter Notebook that interfaces with EPA's ECHO enforcement and compliance history database.
 
+Notebook link: https://colab.research.google.com/github/edgi-govdata-archiving/ECHO-COVID19/blob/main/ECHO-COVID19.ipynb
+
 # How to start contributing to this repo
 * Contact @ericnost
 * Slack channel - #eew_coordination
