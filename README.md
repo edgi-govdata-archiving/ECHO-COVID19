@@ -8,6 +8,7 @@ This repo is home to a project exploring the effects of EPA's policy to not enfo
 * Slack channel - #eew_coordination
 
 # Additional features (TBD):
+* [ECHO-COVID19 notebook link](https://colab.research.google.com/github/edgi-govdata-archiving/ECHO-COVID19/blob/main/ECHO-COVID19.ipynb)
 * A "How to use" section
 * A link to the [good-first-issue](https://github.com/issues?q=is%3Aopen+is%3Aissue+label%3Agood-first-issue+user%3Aedgi-govdata-archiving) label
 * Highlight "ready" label on issues to mean "this is an issue that is ready to work on and needs an owner"
